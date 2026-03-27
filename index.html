@@ -73,6 +73,14 @@
       font-size: 0.9rem;
       opacity: 0.7;
     }
+    .success {
+      display: none;
+      background: rgba(0, 255, 0, 0.2);
+      color: #000;
+      padding: 0.8rem;
+      border-radius: 8px;
+      margin-top: 0.8rem;
+    }
   </style>
 </head>
 <body>
@@ -82,10 +90,21 @@
       Deixe seu e‑mail e receba nosso guia gratuito com dicas exclusivas para alcançar melhores resultados.
     </p>
 
-    <form class="form" action="#" method="POST" onsubmit="alert('Obrigado! Seu e-mail foi recebido.'); return false;">
+    <!-- Formulário configurado para Netlify Forms -->
+    <form
+      class="form"
+      name="captura"
+      method="POST"
+      data-netlify="true"
+      onsubmit="document.getElementById('success').style.display = 'block'; this.reset(); return false;"
+    >
+      <input type="hidden" name="form-name" value="captura" />
       <input type="text" placeholder="Seu nome" name="nome" required />
       <input type="email" placeholder="Seu e-mail" name="email" required />
       <button type="submit">Quero Receber o Material</button>
+      <div class="success" id="success">
+        Obrigado! Seu cadastro foi enviado com sucesso.
+      </div>
     </form>
 
     <div class="footer">
