@@ -162,10 +162,10 @@
 
           success.style.display = "block";
           form.reset();
-        } catch (err) {
-          console.error("Erro ao enviar e‑mail:", err);
-          alert("Algo deu errado. Tente novamente.");
-        }
+        catch (err) {
+  console.error("Erro completo:", err);
+  alert("Erro ao enviar. Veja o console (F12) para detalhes.");
+}
       });
     })();
   </script>
