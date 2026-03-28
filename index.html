@@ -90,20 +90,13 @@
       Deixe seu e‑mail e receba nosso guia gratuito com dicas exclusivas para alcançar melhores resultados.
     </p>
 
-    <!-- Formulário configurado para Netlify Forms -->
-    <form
-      class="form"
-      name="captura"
-      method="POST"
-      data-netlify="true"
-      onsubmit="document.getElementById('success').style.display = 'block'; this.reset(); return false;"
-    >
-      <input type="hidden" name="form-name" value="captura" />
-      <input type="text" placeholder="Seu nome" name="nome" required />
-      <input type="email" placeholder="Seu e-mail" name="email" required />
+    <!-- Formulário sem Netlify Forms, só para EmailJS -->
+    <form class="form" id="capturaForm">
+      <input type="text" id="nome" placeholder="Seu nome" required />
+      <input type="email" id="email" placeholder="Seu e-mail" required />
       <button type="submit">Quero Receber o Material</button>
       <div class="success" id="success">
-        Obrigado! Seu cadastro foi enviado com sucesso.
+        Obrigado! Você receberá o material em instantes.
       </div>
     </form>
 
@@ -112,5 +105,67 @@
       Desenvolvido com HTML, CSS e JavaScript puro.
     </div>
   </div>
+
+  <!-- EmailJS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function () {
+      // Inicialize o EmailJS com sua conta
+      // Substitua SEU_PUBLIC_KEY
+      emailjs.init("SEU_PUBLIC_KEY_AQUI");
+
+      const form = document.getElementById("capturaForm");
+      const nomeInput = document.getElementById("nome");
+      const emailInput = document.getElementById("email");
+      const success = document.getElementById("success");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const nome = nomeInput.value.trim();
+        const email = emailInput.value.trim();
+
+        if (!nome || !email) {
+          alert("Preencha nome e e‑mail.");
+          return;
+        }
+
+        // Envia o e‑mail para você (ou para o lead) com os dados
+        const templateParams = {
+          to_email: "SEU_EMAIL_AQUI", // seu e‑mail de captura
+          lead_nome: nome,
+          lead_email: email,
+          subject: "Novo lead na página de captura",
+          message: `Nome: ${nome}\nEmail: ${email}`,
+        };
+
+        try {
+          await emailjs.send(
+            "SEU_SERVICE_ID",
+            "SEU_TEMPLATE_ID",
+            templateParams
+          );
+
+          // Opcional: envia e‑mail também para o lead
+          await emailjs.send(
+            "SEU_SERVICE_ID",
+            "SEU_TEMPLATE_ID_PARA_LEAD",
+            {
+              to_email: email,
+              from_name: "Sua Marca",
+              subject: "Bem‑vindo(a) ao guia!",
+              message: `Olá ${nome}!\n\nObrigado por se cadastrar. Em breve você receberá o material.`,
+            }
+          );
+
+          success.style.display = "block";
+          form.reset();
+        } catch (err) {
+          console.error("Erro ao enviar e‑mail:", err);
+          alert("Algo deu errado. Tente novamente.");
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
