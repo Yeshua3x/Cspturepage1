@@ -132,7 +132,7 @@
 
         // Envia o e‑mail para você (ou para o lead) com os dados
         const templateParams = {
-          to_email: "SEU_EMAIL_AQUI", // seu e‑mail de captura
+          to_email: "rochaeterna12@outlook.com", // seu e‑mail de captura
           lead_nome: nome,
           lead_email: email,
           subject: "Novo lead na página de captura",
@@ -141,14 +141,15 @@
 
         try {
           await emailjs.send(
-            "SEU_SERVICE_ID",
+            "service_bj0f6i4",
+            
             "SEU_TEMPLATE_ID",
             templateParams
           );
 
           // Opcional: envia e‑mail também para o lead
           await emailjs.send(
-            "SEU_SERVICE_ID",
+            "service_bj0f6i4",
             "SEU_TEMPLATE_ID_PARA_LEAD",
             {
               to_email: email,
